@@ -7,6 +7,7 @@ namespace AlibabaCloud\SDK\ESA\V20240910\Models\GetWafFilterResponseBody\filter;
 use AlibabaCloud\Dara\Model;
 use AlibabaCloud\SDK\ESA\V20240910\Models\GetWafFilterResponseBody\filter\fields\logics;
 use AlibabaCloud\SDK\ESA\V20240910\Models\GetWafFilterResponseBody\filter\fields\selector;
+use AlibabaCloud\SDK\ESA\V20240910\Models\GetWafFilterResponseBody\filter\fields\subs;
 
 class fields extends Model
 {
@@ -49,6 +50,11 @@ class fields extends Model
      * @var string
      */
     public $subTip;
+
+    /**
+     * @var subs[]
+     */
+    public $subs;
     protected $_name = [
         'enable' => 'Enable',
         'key' => 'Key',
@@ -58,6 +64,7 @@ class fields extends Model
         'selector' => 'Selector',
         'sub' => 'Sub',
         'subTip' => 'SubTip',
+        'subs' => 'Subs',
     ];
 
     public function validate()
@@ -67,6 +74,9 @@ class fields extends Model
         }
         if (null !== $this->selector) {
             $this->selector->validate();
+        }
+        if (\is_array($this->subs)) {
+            Model::validateArray($this->subs);
         }
         parent::validate();
     }
@@ -111,6 +121,17 @@ class fields extends Model
 
         if (null !== $this->subTip) {
             $res['SubTip'] = $this->subTip;
+        }
+
+        if (null !== $this->subs) {
+            if (\is_array($this->subs)) {
+                $res['Subs'] = [];
+                $n1 = 0;
+                foreach ($this->subs as $item1) {
+                    $res['Subs'][$n1] = null !== $item1 ? $item1->toArray($noStream) : $item1;
+                    ++$n1;
+                }
+            }
         }
 
         return $res;
@@ -161,6 +182,17 @@ class fields extends Model
 
         if (isset($map['SubTip'])) {
             $model->subTip = $map['SubTip'];
+        }
+
+        if (isset($map['Subs'])) {
+            if (!empty($map['Subs'])) {
+                $model->subs = [];
+                $n1 = 0;
+                foreach ($map['Subs'] as $item1) {
+                    $model->subs[$n1] = subs::fromMap($item1);
+                    ++$n1;
+                }
+            }
         }
 
         return $model;
